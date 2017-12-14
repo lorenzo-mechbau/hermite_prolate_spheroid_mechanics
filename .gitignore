@@ -1,0 +1,6 @@
+# Linux temporary files
+*~
+# Text files
+stdout.txt
+# Python files
+*.pyc
