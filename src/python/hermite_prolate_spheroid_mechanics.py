@@ -19,8 +19,8 @@ endocardiumFibreAngle = -90.0 * pi / 180.0
 sheetAngle = 90.0 * pi / 180.0
 
 # Simulation parameters:
-cavityPressure = 1.3
-numIncrements = 4
+cavityPressure = 0.8
+numIncrements = 1
 
 # Geometric and hydrostatic pressure interpolation:
 interpolations = ['cubic_hermite', 'linear']
