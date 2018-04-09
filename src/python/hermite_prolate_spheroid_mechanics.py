@@ -19,8 +19,8 @@ endocardiumFibreAngle = -90.0 * pi / 180.0
 sheetAngle = 90.0 * pi / 180.0
 
 # Simulation parameters:
-cavityPressure = 1.3
-numIncrements = 4
+cavityPressure = 0.8
+numIncrements = 1
 
 # Geometric and hydrostatic pressure interpolation:
 interpolations = ['cubic_hermite', 'linear']
@@ -250,11 +250,11 @@ problem.ControlLoopCreateFinish()
 solver = iron.Solver()
 problem.SolversCreateStart()
 problem.SolverGet([iron.ControlLoopIdentifiers.NODE], 1, solver)
-solver.OutputTypeSet(iron.SolverOutputTypes.PROGRESS)
+solver.OutputTypeSet(iron.SolverOutputTypes.MONITOR)
 solver.NewtonJacobianCalculationTypeSet(iron.JacobianCalculationTypes.FD)
-solver.NewtonRelativeToleranceSet(1.0e-8)
-solver.NewtonAbsoluteToleranceSet(1.0e-8)
-solver.NewtonSolutionToleranceSet(1.0e-8)
+solver.NewtonRelativeToleranceSet(1.0e-14)
+solver.NewtonAbsoluteToleranceSet(1.0e-14)
+solver.NewtonSolutionToleranceSet(1.0e-14)
 # Adjust settings for the line search solver
 linesearchSolver = iron.Solver()
 solver.NewtonLinearSolverGet(linesearchSolver)
