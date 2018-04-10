@@ -61,8 +61,9 @@ problemUserNumber = 1
 
 # Get the number of computational nodes and this computational node number
 # for when running in parallel with MPI
-numberOfComputationalNodes = iron.ComputationalNumberOfNodesGet()
-computationalNodeNumber = iron.ComputationalNodeNumberGet()
+computationEnvironment = iron.ComputationEnvironment()
+numberOfComputationalNodes = computationEnvironment.NumberOfWorldNodesGet()
+computationalNodeNumber = computationEnvironment.WorldNodeNumberGet()
 
 # Create a 3D rectangular cartesian coordinate system
 coordinateSystem = iron.CoordinateSystem()
