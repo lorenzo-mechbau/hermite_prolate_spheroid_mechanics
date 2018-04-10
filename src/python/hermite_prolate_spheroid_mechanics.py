@@ -107,7 +107,7 @@ geometricField.ScalingTypeSet(iron.FieldScalingTypes.UNIT)
 geometricField.CreateFinish()
 
 # Use the prolate spheroid geometry to set the geometric field parameters
-geometry.setGeometry(geometricField)
+geometry.setGeometry(computationEnvironment,geometricField)
 
 # Create a fibre field and attach it to the geometric field
 # This has three components describing fibre orientations as
@@ -126,7 +126,7 @@ for component in range(1, 4):
 fibreField.CreateFinish()
 
 # Use the prolate spheroid geometry to set up the fibre field values
-geometry.setFibres(fibreField)
+geometry.setFibres(computationEnvironment,fibreField)
 
 # Create the equations set and equations set field
 # This defines the type of equations to solve
@@ -280,14 +280,14 @@ problem.SolverEquationsCreateFinish()
 boundaryConditions = iron.BoundaryConditions()
 solverEquations.BoundaryConditionsCreateStart(boundaryConditions)
 
-def getDomainNodes(geometry, decomposition, component):
+def getDomainNodes(computationEnvironment, geometry, decomposition, component):
     component_name = interpolations[component - 1]
-    computationalNodeNumber = iron.ComputationalNodeNumberGet()
+    computationalNodeNumber = computationEnvironment.WorldNodeNumberGet()
     nodes = geometry.componentNodes(component_name)
     meshComponent = geometry.meshComponent(component_name)
     return set(node for node in nodes
         if decomposition.NodeDomainGet(node, meshComponent) == computationalNodeNumber)
-geometricDomainNodes = getDomainNodes(geometry, decomposition, geometricMeshComponent)
+geometricDomainNodes = getDomainNodes(computationEnvironment, geometry, decomposition, geometricMeshComponent)
 
 # Fix epicardium nodes at the base:
 baseNodes = set(geometry.nodeGroup('base'))
