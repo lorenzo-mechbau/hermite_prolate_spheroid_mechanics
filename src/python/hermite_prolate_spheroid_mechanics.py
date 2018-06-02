@@ -100,7 +100,7 @@ decomposition.CreateFinish()
 # Create a field for the geometry
 geometricField = iron.Field()
 geometricField.CreateStart(geometricFieldUserNumber, region)
-geometricField.MeshDecompositionSet(decomposition)
+geometricField.DecompositionSet(decomposition)
 geometricField.TypeSet(iron.FieldTypes.GEOMETRIC)
 geometricField.VariableLabelSet(iron.FieldVariableTypes.U, "Geometry")
 # Set the x, y and z components to use the first mesh component:
@@ -119,7 +119,7 @@ geometry.setGeometry(computationEnvironment,geometricField)
 fibreField = iron.Field()
 fibreField.CreateStart(fibreFieldUserNumber, region)
 fibreField.TypeSet(iron.FieldTypes.FIBRE)
-fibreField.MeshDecompositionSet(decomposition)
+fibreField.DecompositionSet(decomposition)
 fibreField.GeometricFieldSet(geometricField)
 fibreField.VariableLabelSet(iron.FieldVariableTypes.U, "Fibre")
 fibreField.ScalingTypeSet(iron.FieldScalingTypes.UNIT)
@@ -212,7 +212,7 @@ dependentField.ComponentValuesInitialise(
 # deformed fibres from the dependent field because it isn't a geometric field.
 deformedField = iron.Field()
 deformedField.CreateStart(deformedFieldUserNumber, region)
-deformedField.MeshDecompositionSet(decomposition)
+deformedField.DecompositionSet(decomposition)
 deformedField.TypeSet(iron.FieldTypes.GEOMETRIC)
 deformedField.VariableLabelSet(iron.FieldVariableTypes.U, "DeformedGeometry")
 for component in [1, 2, 3]:

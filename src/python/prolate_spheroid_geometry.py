@@ -138,7 +138,7 @@ class ProlateSpheroid(object):
 
     def setGeometry(self, computationEnvironment, geometricField):
         decomposition = iron.Decomposition()
-        geometricField.MeshDecompositionGet(decomposition)
+        geometricField.DecompositionGet(decomposition)
         geometricInterpolation = self.interpolations[0]
         compNodeNumber = computationEnvironment.WorldNodeNumberGet()
         geometricMeshComponent = 1
@@ -188,7 +188,7 @@ class ProlateSpheroid(object):
         lmbdaDerivs = (epiAngles - endoAngles) / self.numElements[2]
 
         decomposition = iron.Decomposition()
-        fibreField.MeshDecompositionGet(decomposition)
+        fibreField.DecompositionGet(decomposition)
         # Set fibre angles at nodes
         def setAngles(pos, angles):
             nodeNumber = self.nodeAtPosition(pos)
