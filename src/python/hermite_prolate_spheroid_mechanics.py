@@ -60,10 +60,12 @@ equationsSetUserNumber = 1
 problemUserNumber = 1
 
 # Get the number of computational nodes and this computational node number
-# for when running in parallel with MPI
-computationEnvironment = iron.ComputationEnvironment()
-numberOfComputationalNodes = computationEnvironment.NumberOfWorldNodesGet()
-computationalNodeNumber = computationEnvironment.WorldNodeNumberGet()
+#computationEnvironment = iron.ComputationEnvironment()
+#numberOfComputationalNodes = computationEnvironment.NumberOfWorldNodesGet()
+#computationalNodeNumber = computationEnvironment.WorldNodeNumberGet()
+numberOfComputationalNodes = iron.ComputationalNumberOfNodesGet()
+computationalNodeNumber = iron.ComputationalNodeNumberGet()
+
 
 # Create a 3D rectangular cartesian coordinate system
 coordinateSystem = iron.CoordinateSystem()
@@ -107,7 +109,8 @@ geometricField.ScalingTypeSet(iron.FieldScalingTypes.UNIT)
 geometricField.CreateFinish()
 
 # Use the prolate spheroid geometry to set the geometric field parameters
-geometry.setGeometry(computationEnvironment,geometricField)
+#geometry.setGeometry(computationEnvironment,geometricField)
+geometry.setGeometry(geometricField)
 
 # Create a fibre field and attach it to the geometric field
 # This has three components describing fibre orientations as
@@ -126,7 +129,8 @@ for component in range(1, 4):
 fibreField.CreateFinish()
 
 # Use the prolate spheroid geometry to set up the fibre field values
-geometry.setFibres(computationEnvironment,fibreField)
+#geometry.setFibres(computationEnvironment,fibreField)
+geometry.setFibres(fibreField)
 
 # Create the equations set and equations set field
 # This defines the type of equations to solve
@@ -280,14 +284,17 @@ problem.SolverEquationsCreateFinish()
 boundaryConditions = iron.BoundaryConditions()
 solverEquations.BoundaryConditionsCreateStart(boundaryConditions)
 
-def getDomainNodes(computationEnvironment, geometry, decomposition, component):
+def getDomainNodes(geometry, decomposition, component):
+#def getDomainNodes(computationEnvironment, geometry, decomposition, component):
     component_name = interpolations[component - 1]
-    computationalNodeNumber = computationEnvironment.WorldNodeNumberGet()
+    computationalNodeNumber = iron.ComputationalNodeNumberGet()
+#    computationalNodeNumber = computationEnvironment.WorldNodeNumberGet()
     nodes = geometry.componentNodes(component_name)
     meshComponent = geometry.meshComponent(component_name)
     return set(node for node in nodes
         if decomposition.NodeDomainGet(node, meshComponent) == computationalNodeNumber)
-geometricDomainNodes = getDomainNodes(computationEnvironment, geometry, decomposition, geometricMeshComponent)
+geometricDomainNodes = getDomainNodes(geometry, decomposition, geometricMeshComponent) 
+# geometricDomainNodes = getDomainNodes(computationEnvironment, geometry, decomposition, geometricMeshComponent)
 
 # Fix epicardium nodes at the base:
 baseNodes = set(geometry.nodeGroup('base'))

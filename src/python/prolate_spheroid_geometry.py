@@ -136,11 +136,13 @@ class ProlateSpheroid(object):
         mesh.CreateFinish()
         return mesh
 
-    def setGeometry(self, computationEnvironment, geometricField):
+    def setGeometry(self, geometricField): 
+#    def setGeometry(self, computationEnvironment, geometricField):
         decomposition = iron.Decomposition()
         geometricField.MeshDecompositionGet(decomposition)
         geometricInterpolation = self.interpolations[0]
-        compNodeNumber = computationEnvironment.WorldNodeNumberGet()
+#        compNodeNumber = computationEnvironment.WorldNodeNumberGet()
+        compNodeNumber = iron.ComputationalNodeNumberGet() 
         geometricMeshComponent = 1
         # Set the geometric field parameters from the prolate spheroid geometry
         for nodeNum, values in enumerate(self.nodeValues(), 1):
@@ -169,12 +171,14 @@ class ProlateSpheroid(object):
                             iron.FieldVariableTypes.U,
                             iron.FieldParameterSetTypes.VALUES)
 
-    def setFibres(self, computationEnvironment,fibreField):
+    def setFibres(self, fibreField):
+#    def setFibres(self, computationEnvironment,fibreField):
         endocardiumFibreAngle = self.endocardiumFibreAngle
         epicardiumFibreAngle = self.epicardiumFibreAngle
         sheetAngle = self.sheetAngle
         geometricMeshComponent = 1
-        compNodeNumber = computationEnvironment.WorldNodeNumberGet()
+#        compNodeNumber = computationEnvironment.WorldNodeNumberGet()
+        compNodeNumber = iron.ComputationalNodeNumberGet() 
 
         hasQuadratic = self.interpolations[0] == 'quadratic'
         if hasQuadratic:
