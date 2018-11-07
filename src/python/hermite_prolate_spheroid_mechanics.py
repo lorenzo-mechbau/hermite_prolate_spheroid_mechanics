@@ -382,3 +382,6 @@ fields.CreateRegion(region)
 fields.NodesExport("./results/prolate_spheroid", "FORTRAN")
 fields.ElementsExport("./results/prolate_spheroid", "FORTRAN")
 fields.Finalise()
+
+# Finalise OpenCMISS-Iron
+iron.Finalise()
